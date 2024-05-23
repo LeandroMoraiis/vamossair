@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido para Sair</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black; /* Fundo preto */
+            margin: 0;
+            height: 100vh;
+            max-width: 600px; /* Tamanho máximo da largura */
+            max-height: 400px; /* Tamanho máximo da altura */
+            flex-direction: column; /* Altera a direção para cima e para baixo */
+            color: white; /* Texto branco para contraste */
+        }
+        .button-container {
+            text-align: center;
+            position: relative;
+        }
+        button {
+            font-size: 20px;
+            padding: 10px 20px;
+            margin: 20px;
+            cursor: pointer;
+        }
+        #noButton {
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <p id="question" style="font-size: 24px;">Vamos sair hoje?</p>
+    <div class="button-container">
+        <button id="yesButton">Sim</button>
+        <button id="noButton">Não</button>
+    </div>
+
+    <script>
+        // Script para o botão "Sim"
+        const yesButton = document.getElementById('yesButton');
+
+        yesButton.addEventListener('click', () => {
+            window.location.href = 'https://leandromoraiis.github.io/respostapedido/'; // Substitua pelo URL da página de destino
+        });
+    </script>
+
+    <script>
+        // Script para o botão "Não"
+        const noButton = document.getElementById('noButton');
+        const question = document.getElementById('question');
+        const bodyRect = document.body.getBoundingClientRect();
+
+        noButton.addEventListener('mouseover', () => {
+            // Get the position of the question
+            const questionRect = question.getBoundingClientRect();
+            const questionX = questionRect.left + (questionRect.width / 2);
+            const questionY = questionRect.top + (questionRect.height / 2);
+
+            // Define the radius around the question
+            const radius = 150; // Raio em pixels
+
+            // Calculate new position for "Não" button around the question
+            let newLeft, newTop;
+            do {
+                const angle = Math.random() * Math.PI * 2; // Ângulo em radianos
+                const offsetX = Math.cos(angle) * radius;
+                const offsetY = Math.sin(angle) * radius;
+
+                newLeft = questionX + offsetX - noButton.offsetWidth / 2;
+                newTop = questionY + offsetY - noButton.offsetHeight / 2;
+            } while (newLeft < bodyRect.left || newLeft + noButton.offsetWidth > bodyRect.right || newTop < bodyRect.top || newTop + noButton.offsetHeight > bodyRect.bottom);
+
+            // Set the new position
+            noButton.style.left = `${newLeft}px`;
+            noButton.style.top = `${newTop}px`;
+        });
+    </script>
+</body>
+</html>
